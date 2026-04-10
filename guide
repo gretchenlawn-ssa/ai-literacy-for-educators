@@ -1,0 +1,1452 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AI Literacy for Educators</title>
+<link href="https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400;0,600;0,700;1,400&family=Source+Sans+3:wght@300;400;600;700&display=swap" rel="stylesheet">
+<style>
+:root {
+  --navy: #1a2744;
+  --teal: #2a7f8f;
+  --amber: #e8a020;
+  --coral: #e84855;
+  --cream: #f7f3ee;
+  --white: #ffffff;
+  --light: #f0ece6;
+  --muted: #7a7a8c;
+  --text: #2c2c3a;
+  --green: #2d9e6b;
+}
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; }
+body {
+  font-family: 'Source Sans 3', sans-serif;
+  background: var(--cream);
+  color: var(--text);
+  line-height: 1.75;
+  font-size: 16px;
+}
+
+/* ── HEADER ── */
+header {
+  background: var(--navy);
+  padding: 2.5rem 2rem 2rem;
+  text-align: center;
+  position: relative;
+  overflow: hidden;
+}
+header::before {
+  content: '';
+  position: absolute; top: -60px; right: -60px;
+  width: 220px; height: 220px;
+  background: radial-gradient(circle, rgba(232,160,32,.25) 0%, transparent 70%);
+  border-radius: 50%;
+}
+header::after {
+  content: '';
+  position: absolute; bottom: -40px; left: -40px;
+  width: 160px; height: 160px;
+  background: radial-gradient(circle, rgba(42,127,143,.2) 0%, transparent 70%);
+  border-radius: 50%;
+}
+header h1 {
+  font-family: 'Lora', serif;
+  color: var(--white);
+  font-size: clamp(1.6rem, 4vw, 2.4rem);
+  font-weight: 700;
+  letter-spacing: -0.01em;
+  margin-bottom: 0.4rem;
+  position: relative; z-index: 1;
+}
+header p {
+  color: rgba(255,255,255,.65);
+  font-size: .95rem;
+  position: relative; z-index: 1;
+}
+header .badge {
+  display: inline-block;
+  background: var(--amber);
+  color: var(--navy);
+  font-size: .75rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: .08em;
+  padding: .25rem .75rem;
+  border-radius: 20px;
+  margin-bottom: .8rem;
+  position: relative; z-index: 1;
+}
+
+/* ── WARNING BANNER ── */
+.warning-banner {
+  background: #fef9c3;
+  color: #2c2c3a;
+  padding: 1rem 1.5rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 2.5rem;
+  flex-wrap: wrap;
+  font-weight: 700;
+  font-size: .9rem;
+  letter-spacing: .03em;
+  text-align: center;
+  position: sticky;
+  top: 0; z-index: 200;
+  box-shadow: 0 3px 14px rgba(200,160,0,.25); border-bottom: 2px solid #f0c000;
+}
+.warning-banner .warn-item {
+  display: flex; align-items: center; gap: .4rem;
+}
+.warn-icon {
+  font-size: 1.2rem;
+  animation: pulse 2s ease-in-out infinite;
+}
+@keyframes pulse {
+  0%,100% { transform: scale(1); }
+  50% { transform: scale(1.15); }
+}
+
+/* ── NAV TABS ── */
+nav {
+  background: var(--white);
+  border-bottom: 3px solid var(--amber);
+  overflow-x: auto;
+  white-space: nowrap;
+  padding: 0 .5rem;
+  box-shadow: 0 2px 10px rgba(0,0,0,.07);
+  -webkit-overflow-scrolling: touch;
+}
+nav::-webkit-scrollbar { height: 3px; }
+nav::-webkit-scrollbar-track { background: var(--light); }
+nav::-webkit-scrollbar-thumb { background: var(--amber); border-radius: 2px; }
+.tab-btn {
+  background: none; border: none;
+  padding: .9rem 1rem;
+  font-family: 'Source Sans 3', sans-serif;
+  font-size: .8rem;
+  font-weight: 700;
+  color: var(--muted);
+  cursor: pointer;
+  border-bottom: 3px solid transparent;
+  margin-bottom: -3px;
+  transition: all .2s;
+  white-space: nowrap;
+  text-transform: uppercase;
+  letter-spacing: .05em;
+  display: inline-block;
+  text-decoration: none;
+}
+.tab-btn:hover { color: var(--navy); }
+.tab-btn.active { color: var(--navy); border-bottom-color: var(--amber); }
+/* CSS :target tab activation — works without JavaScript */
+.section { display: none; }
+#t1:target, #t2:target, #t3:target, #t4:target, #t5:target,
+#t6:target, #t7:target, #t8:target, #t9:target, #t10:target { display: block; animation: fadeUp .35s ease; }
+/* Default: show t1 when no hash is active */
+body:not(:has(.section:target)) #t1 { display: block; }
+/* Active tab highlight via :target */
+body:has(#t1:target) a[href="#t1"],
+body:not(:has(.section:target)) a[href="#t1"] { color: var(--navy); border-bottom-color: var(--amber); }
+body:has(#t2:target)  a[href="#t2"]  { color: var(--navy); border-bottom-color: var(--amber); }
+body:has(#t3:target)  a[href="#t3"]  { color: var(--navy); border-bottom-color: var(--amber); }
+body:has(#t4:target)  a[href="#t4"]  { color: var(--navy); border-bottom-color: var(--amber); }
+body:has(#t5:target)  a[href="#t5"]  { color: var(--navy); border-bottom-color: var(--amber); }
+body:has(#t6:target)  a[href="#t6"]  { color: var(--navy); border-bottom-color: var(--amber); }
+body:has(#t7:target)  a[href="#t7"]  { color: var(--navy); border-bottom-color: var(--amber); }
+body:has(#t8:target)  a[href="#t8"]  { color: var(--navy); border-bottom-color: var(--amber); }
+body:has(#t9:target)  a[href="#t9"]  { color: var(--navy); border-bottom-color: var(--amber); }
+body:has(#t10:target) a[href="#t10"] { color: var(--navy); border-bottom-color: var(--amber); }
+/* Active tab number badge */
+body:has(#t1:target) a[href="#t1"] .tab-num,
+body:not(:has(.section:target)) a[href="#t1"] .tab-num,
+body:has(#t2:target) a[href="#t2"] .tab-num,
+body:has(#t3:target) a[href="#t3"] .tab-num,
+body:has(#t4:target) a[href="#t4"] .tab-num,
+body:has(#t5:target) a[href="#t5"] .tab-num,
+body:has(#t6:target) a[href="#t6"] .tab-num,
+body:has(#t7:target) a[href="#t7"] .tab-num,
+body:has(#t8:target) a[href="#t8"] .tab-num,
+body:has(#t9:target) a[href="#t9"] .tab-num,
+body:has(#t10:target) a[href="#t10"] .tab-num { background: var(--amber); color: var(--navy); }
+.tab-num {
+  display: inline-flex; align-items: center; justify-content: center;
+  width: 1.3rem; height: 1.3rem;
+  background: var(--light); color: var(--muted);
+  border-radius: 50%; font-size: .7rem; font-weight: 700;
+  margin-right: .3rem;
+}
+.tab-btn.active .tab-num { background: var(--amber); color: var(--navy); }
+
+/* ── MAIN CONTENT ── */
+main { max-width: 980px; margin: 0 auto; padding: 2rem 1.5rem 5rem; }
+@keyframes fadeUp {
+  from { opacity: 0; transform: translateY(10px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+/* ── TYPOGRAPHY ── */
+.sec-title {
+  font-family: 'Lora', serif;
+  font-size: clamp(1.5rem, 3vw, 2rem);
+  color: var(--navy);
+  margin-bottom: .4rem;
+  padding-left: 1rem;
+  border-left: 5px solid var(--amber);
+}
+.sec-lead {
+  color: var(--muted);
+  font-size: 1rem;
+  margin-bottom: 1.8rem;
+  padding-left: 1.3rem;
+}
+h3 { font-family: 'Lora', serif; font-size: 1.15rem; color: var(--navy); margin-bottom: .6rem; }
+h4 { font-size: .95rem; font-weight: 700; color: var(--navy); margin-bottom: .4rem; text-transform: uppercase; letter-spacing: .04em; }
+p { margin-bottom: .75rem; font-size: .97rem; }
+p:last-child { margin-bottom: 0; }
+ul, ol { padding-left: 1.4rem; font-size: .95rem; }
+li { margin-bottom: .4rem; }
+strong { color: var(--navy); }
+
+/* ── CARDS ── */
+.card {
+  background: var(--white);
+  border-radius: 12px;
+  padding: 1.4rem 1.6rem;
+  margin-bottom: 1.3rem;
+  box-shadow: 0 2px 14px rgba(0,0,0,.055);
+  border-left: 4px solid transparent;
+}
+.card.c-teal   { border-left-color: var(--teal); }
+.card.c-amber  { border-left-color: var(--amber); }
+.card.c-navy   { border-left-color: var(--navy); }
+.card.c-coral  { border-left-color: var(--coral); }
+.card.c-green  { border-left-color: var(--green); }
+.card.c-purple { border-left-color: #7b3f9e; }
+
+/* ── GRID ── */
+.g2 { display: grid; grid-template-columns: 1fr 1fr; gap: 1.2rem; margin-bottom: 1.3rem; }
+.g3 { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.1rem; margin-bottom: 1.3rem; }
+@media(max-width:680px) { .g2,.g3 { grid-template-columns:1fr; } nav { padding: 0; } }
+
+/* ── ALERT BOX ── */
+.alert {
+  background: rgba(232,72,85,.08);
+  border: 2.5px solid var(--coral);
+  border-radius: 10px;
+  padding: 1.1rem 1.5rem;
+  margin: 1.4rem 0;
+  font-weight: 700;
+  color: #b03030;
+  font-size: 1rem;
+  text-align: center;
+}
+.alert .alert-icon { font-size: 1.5rem; display: block; margin-bottom: .3rem; }
+
+/* ── HIGHLIGHT ── */
+.highlight {
+  background: linear-gradient(135deg, rgba(232,160,32,.07), rgba(42,127,143,.07));
+  border: 1px solid rgba(232,160,32,.3);
+  border-radius: 10px;
+  padding: 1.1rem 1.5rem;
+  margin: 1.2rem 0;
+  font-size: .96rem;
+}
+
+/* ── TABLE ── */
+table { width:100%; border-collapse:collapse; background:white; border-radius:10px; overflow:hidden; box-shadow:0 2px 12px rgba(0,0,0,.06); margin-bottom:1.4rem; font-size:.91rem; }
+th { background:var(--navy); color:white; padding:.75rem 1rem; text-align:left; font-weight:700; font-size:.87rem; text-transform:uppercase; letter-spacing:.04em; }
+td { padding:.7rem 1rem; border-bottom:1px solid var(--light); vertical-align:top; }
+tr:last-child td { border-bottom:none; }
+tr:nth-child(even) td { background:var(--cream); }
+
+/* ── STEPS LIST ── */
+.steps { list-style:none; padding:0; }
+.steps li { display:flex; align-items:flex-start; gap:1rem; margin-bottom:.9rem; font-size:.96rem; }
+.step-num {
+  min-width:2rem; height:2rem; background:var(--amber); color:var(--navy);
+  border-radius:50%; display:flex; align-items:center; justify-content:center;
+  font-weight:800; font-size:.85rem; flex-shrink:0; margin-top:.05rem;
+}
+
+/* ── CLASSROOM CARDS ── */
+.cc { background:white; border-radius:12px; overflow:hidden; margin-bottom:1.4rem; box-shadow:0 2px 14px rgba(0,0,0,.07); }
+.cc-head { padding:1rem 1.5rem; color:white; }
+.cc-head h3 { color:white; margin:0; font-size:1.05rem; }
+.cc-head .cc-label { font-size:.77rem; font-weight:700; text-transform:uppercase; letter-spacing:.06em; opacity:.8; margin-bottom:.2rem; }
+.cc-body { padding:1.2rem 1.5rem; }
+.cc-body ul { padding-left:1.3rem; }
+.cc-body li { margin-bottom:.5rem; font-size:.93rem; }
+.cc-elem    { background: var(--teal); }
+.cc-middle  { background: var(--navy); }
+.cc-high    { background: #5a2d82; }
+.cc-elective{ background: #c0550a; }
+
+/* ── TAG ── */
+.tag {
+  display:inline-block; padding:.2rem .65rem; border-radius:20px;
+  font-size:.78rem; font-weight:700; margin:.15rem;
+}
+.t-teal  { background:rgba(42,127,143,.12); color:var(--teal); }
+.t-amber { background:rgba(232,160,32,.15); color:#9a6800; }
+.t-coral { background:rgba(232,72,85,.12);  color:var(--coral); }
+.t-navy  { background:rgba(26,39,68,.1);    color:var(--navy); }
+.t-green { background:rgba(45,158,107,.12); color:var(--green); }
+.t-purple{ background:rgba(123,63,158,.12); color:#7b3f9e; }
+
+/* ── PROS / CONS ── */
+.pros-card { border-left-color: var(--green) !important; }
+.cons-card { border-left-color: var(--coral) !important; }
+.pros-card h3 { color: var(--green); }
+.cons-card h3 { color: var(--coral); }
+
+/* ── ICON CARD ── */
+.icon-card { text-align:center; }
+.icon-card .ic-icon { font-size:2.2rem; display:block; margin-bottom:.5rem; }
+
+/* ── FOOTER ── */
+.sec-footer {
+  margin-top:2rem; padding:1.1rem 1.5rem;
+  background:var(--navy); color:rgba(255,255,255,.75);
+  border-radius:10px; font-size:.88rem; text-align:center;
+}
+.sec-footer strong { color:var(--amber); }
+
+</style>
+</head>
+<body>
+
+<!-- HEADER -->
+<header>
+  <div style="display:flex; align-items:center; justify-content:center; gap:1.2rem; margin-bottom:1rem; position:relative; z-index:1; flex-wrap:wrap;">
+    <img src="data:image/jpeg;base64,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" alt="Shared Services Alliance" style="height:60px; object-fit:contain; background:white; border-radius:8px; padding:6px 12px;">
+  </div>
+  <div class="badge">Educator Resource Guide</div>
+  <h1>🤖 AI Literacy for Educators</h1>
+  <p>A comprehensive, plain-language guide to understanding and using AI in schools</p>
+  <div style="margin-top:1rem; position:relative; z-index:1; display:flex; align-items:center; justify-content:center; gap:.6rem; flex-wrap:wrap;">
+    <span style="color:rgba(255,255,255,.5); font-size:.8rem;">▸</span>
+    <span style="color:rgba(255,255,255,.85); font-size:.88rem; font-weight:600; letter-spacing:.02em;">Gretchen Lawn</span>
+    <span style="color:rgba(255,255,255,.35); font-size:.8rem;">|</span>
+    <a href="/cdn-cgi/l/email-protection#7f180d1a0b1c171a1151131e08113f1a0c1c111a1051100d18" style="color:var(--amber); font-size:.88rem; font-weight:600; text-decoration:none; letter-spacing:.01em;"><span class="__cf_email__" data-cfemail="20475245544348454e0e4c41574e604553434e454f0e4f5247">[email&#160;protected]</span></a>
+    <span style="color:rgba(255,255,255,.5); font-size:.8rem;">◂</span>
+  </div>
+</header>
+
+<!-- PERSISTENT WARNING BANNER -->
+<div class="warning-banner">
+  <div class="warn-item">
+    <span class="warn-icon" style="color:#c0392b;">⚠️</span>
+    <span style="font-size:.92rem;">ALWAYS VERIFY AI OUTPUT FOR ACCURACY — EVERY SINGLE TIME</span>
+  </div>
+  <div class="warn-item">
+    <span class="warn-icon" style="color:#c0392b;">🔒</span>
+    <span style="font-size:.92rem;">NEVER ENTER STUDENT OR STAFF PII INTO AI TOOLS</span>
+  </div>
+</div>
+
+<!-- TAB NAVIGATION -->
+<nav>
+  <a class="tab-btn" href="#t1"><span class="tab-num">1</span>Types of AI</a>
+  <a class="tab-btn" href="#t2"><span class="tab-num">2</span>How GenAI Works</a>
+  <a class="tab-btn" href="#t3"><span class="tab-num">3</span>How LLMs Work</a>
+  <a class="tab-btn" href="#t4"><span class="tab-num">4</span>AI Literacy</a>
+  <a class="tab-btn" href="#t5"><span class="tab-num">5</span>Hallucinations</a>
+  <a class="tab-btn" href="#t6"><span class="tab-num">6</span>Data &amp; Privacy</a>
+  <a class="tab-btn" href="#t7"><span class="tab-num">7</span>For Schools</a>
+  <a class="tab-btn" href="#t8"><span class="tab-num">8</span>Pros &amp; Cons</a>
+  <a class="tab-btn" href="#t9"><span class="tab-num">9</span>Ethics</a>
+  <a class="tab-btn" href="#t10"><span class="tab-num">10</span>Classroom Ideas</a>
+</nav>
+
+<main>
+
+<!-- ═══════════════════════════════════════════════════════════ -->
+<!-- TAB 1: TYPES OF AI -->
+<!-- ═══════════════════════════════════════════════════════════ -->
+<div class="section" id="t1">
+  <h2 class="sec-title">Types of AI: What's the Difference?</h2>
+  <p class="sec-lead">Not all AI is the same. Understanding the distinctions helps you make better decisions as an educator.</p>
+
+  <div class="g3">
+    <div class="card c-navy icon-card">
+      <span class="ic-icon">🎯</span>
+      <h3>Traditional AI</h3>
+      <p>Also called <strong>Narrow AI</strong> or <strong>Rule-Based AI</strong>. It is programmed with specific rules to perform one task — and only that task.</p>
+      <p><strong>Key Idea:</strong> It follows instructions a programmer wrote. It doesn't "learn" on its own.</p>
+    </div>
+    <div class="card c-teal icon-card">
+      <span class="ic-icon">✨</span>
+      <h3>Generative AI</h3>
+      <p>AI that can <strong>create new content</strong> — text, images, audio, video, and code — by learning patterns from enormous amounts of data.</p>
+      <p><strong>Key Idea:</strong> It generates something new based on what it has learned. It doesn't just follow rules.</p>
+    </div>
+    <div class="card c-amber icon-card">
+      <span class="ic-icon">🛠️</span>
+      <h3>AI Tools</h3>
+      <p><strong>Applications built on top of</strong> AI models that regular users interact with — like ChatGPT, Canva AI, or Google Gemini.</p>
+      <p><strong>Key Idea:</strong> The "tool" is the front door. The AI model is the engine inside.</p>
+    </div>
+  </div>
+
+  <div class="card c-navy">
+    <h3>Traditional AI — Deeper Look</h3>
+    <p>Traditional AI has been around for decades and is still everywhere. It works by following rules or recognizing patterns in data it was specifically trained on.</p>
+    <div class="g2">
+      <div>
+        <h4>📌 Examples in Daily Life</h4>
+        <ul>
+          <li>Spam filters in your email</li>
+          <li>GPS route suggestions</li>
+          <li>A chess computer</li>
+          <li>Netflix movie recommendations</li>
+          <li>Face unlock on your phone</li>
+          <li>Autocorrect on your keyboard</li>
+          <li>Fraud detection on credit cards</li>
+        </ul>
+      </div>
+      <div>
+        <h4>🧩 How It Differs</h4>
+        <ul>
+          <li>Can only do the <strong>one task</strong> it was built for</li>
+          <li>Cannot hold a conversation or write an essay</li>
+          <li>Works by rules or statistics — not understanding</li>
+          <li>Very reliable and predictable within its lane</li>
+          <li>Has been in schools for years (think: adaptive quizzes)</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <div class="card c-teal">
+    <h3>Generative AI — Deeper Look</h3>
+    <p>Generative AI is the "new wave" everyone is talking about. These systems were trained on massive amounts of human-created content and learned the patterns within it. Now they can produce <em>new</em> content that looks and sounds human.</p>
+    <div class="g2">
+      <div>
+        <h4>📌 What It Can Generate</h4>
+        <ul>
+          <li><strong>Text:</strong> Essays, emails, lesson plans, poems</li>
+          <li><strong>Images:</strong> Original artwork, diagrams, illustrations</li>
+          <li><strong>Code:</strong> Programs and scripts</li>
+          <li><strong>Audio:</strong> Music, speech synthesis</li>
+          <li><strong>Video:</strong> Short clips (emerging)</li>
+        </ul>
+      </div>
+      <div>
+        <h4>📌 Examples You've Heard Of</h4>
+        <ul>
+          <li>ChatGPT (OpenAI)</li>
+          <li>Google Gemini</li>
+          <li>Microsoft Copilot</li>
+          <li>Claude (Anthropic)</li>
+          <li>DALL-E, Midjourney (images)</li>
+          <li>Suno (music)</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <div class="card c-amber">
+    <h3>AI Tools vs. AI Models — What's the Difference?</h3>
+    <table>
+      <thead><tr><th>AI Model</th><th>AI Tool (Built on That Model)</th></tr></thead>
+      <tbody>
+        <tr><td>GPT-4o (OpenAI)</td><td>ChatGPT, MagicSchool AI, Brisk Teaching</td></tr>
+        <tr><td>Gemini (Google)</td><td>Google Docs AI features, NotebookLM, Khanmigo</td></tr>
+        <tr><td>Claude (Anthropic)</td><td>Claude.ai, some education apps</td></tr>
+        <tr><td>Llama (Meta)</td><td>Various open-source apps</td></tr>
+      </tbody>
+    </table>
+    <p>Think of it like a car engine vs. the car. The <strong>model</strong> is the engine doing the work. The <strong>tool</strong> is the car you actually drive. When schools buy AI tools, they're buying a vehicle — but they should understand what's powering it.</p>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════════════════════ -->
+<!-- TAB 2: HOW GENERATIVE AI WORKS -->
+<!-- ═══════════════════════════════════════════════════════════ -->
+<div class="section" id="t2">
+  <h2 class="sec-title">How Does Generative AI Work?</h2>
+  <p class="sec-lead">You don't need to know the math — but understanding the basics will make you a much smarter user.</p>
+
+  <div class="card c-teal">
+    <h3>The Big Idea: Pattern Learning at Massive Scale</h3>
+    <p>Generative AI was trained on enormous amounts of text, images, and other data — think billions of books, websites, articles, and more. During training, it learned the <strong>patterns</strong> of how language works: which words follow which, what makes a paragraph, how topics connect.</p>
+    <p>It doesn't <em>understand</em> the content the way humans do. It has learned <strong>incredibly complex statistical patterns</strong> about how words and ideas relate. This is both its superpower and its limitation.</p>
+  </div>
+
+  <h3 style="font-family:'Lora',serif; color:var(--navy); margin-bottom:1rem;">How a Text Response is Created — Step by Step</h3>
+  <ul class="steps">
+    <li><span class="step-num">1</span><div><strong>You type a prompt.</strong> "Write a 5th grade reading passage about the water cycle." This is called a <em>prompt</em>.</div></li>
+    <li><span class="step-num">2</span><div><strong>Your prompt is converted into numbers.</strong> The AI doesn't read words — it converts them into numerical tokens (think: coded chunks of text).</div></li>
+    <li><span class="step-num">3</span><div><strong>The model processes the numbers through layers.</strong> A neural network with billions of mathematical connections evaluates your prompt against everything it learned in training.</div></li>
+    <li><span class="step-num">4</span><div><strong>It predicts the next most likely word/token — over and over.</strong> Generative AI builds a response one piece at a time, each time predicting what should logically come next based on patterns it learned.</div></li>
+    <li><span class="step-num">5</span><div><strong>The numbers are converted back to text.</strong> What you see as words and sentences is the output of all those predictions reassembled for you.</div></li>
+    <li><span class="step-num">6</span><div><strong>You see the response.</strong> The whole process takes a few seconds — sometimes even faster.</div></li>
+  </ul>
+
+  <div class="alert">
+    <span class="alert-icon">🚨</span>
+    CRITICAL REMINDER: Generative AI is predicting likely text — it is NOT looking up facts. It is NOT always correct. <br>You MUST verify every output before using it with students or in professional work.
+  </div>
+
+  <div class="g2">
+    <div class="card c-amber">
+      <h3>What AI IS Doing</h3>
+      <ul>
+        <li>Finding patterns in language</li>
+        <li>Predicting statistically likely responses</li>
+        <li>Drawing on patterns from its training data</li>
+        <li>Producing fluent, coherent-sounding text</li>
+        <li>Adapting to the style and context of your prompt</li>
+      </ul>
+    </div>
+    <div class="card c-coral">
+      <h3>What AI Is NOT Doing</h3>
+      <ul>
+        <li>Thinking the way humans think</li>
+        <li>Looking up live facts on the internet (usually)</li>
+        <li>Truly "understanding" your question</li>
+        <li>Guaranteeing accuracy</li>
+        <li>Being creative in the human sense</li>
+        <li>Having emotions, goals, or awareness</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="card c-navy">
+    <h3>A Helpful Analogy for Educators</h3>
+    <p>Imagine a student who has read every textbook, novel, and website ever written — but has never lived a day in the real world. They can write brilliantly about swimming without knowing what water feels like. They might confidently write something that sounds completely correct — but be wrong about a fact.</p>
+    <p>That's generative AI. Fluent. Often brilliant. But not infallible. <strong>Your professional judgment is always the final check.</strong></p>
+  </div>
+
+  <div class="highlight">
+    <strong>💡 What affects the quality of AI output?</strong>
+    <ul style="margin-top:.5rem;">
+      <li><strong>Your prompt:</strong> Better, more specific prompts = better, more useful output</li>
+      <li><strong>The model:</strong> More powerful models (like GPT-4, Claude 3.5) generally produce better results than older/smaller ones</li>
+      <li><strong>The training data:</strong> If the AI was trained on biased or limited data, its output may reflect that</li>
+      <li><strong>Your verification:</strong> No matter what — you check it</li>
+    </ul>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════════════════════ -->
+<!-- TAB 3: HOW LLMs WORK -->
+<!-- ═══════════════════════════════════════════════════════════ -->
+<div class="section" id="t3">
+  <h2 class="sec-title">How LLMs Work</h2>
+  <p class="sec-lead">LLM stands for <strong>Large Language Model</strong> — the technology behind most of today's AI text tools.</p>
+
+  <div class="card c-navy">
+    <h3>What Is an LLM?</h3>
+    <p>A <strong>Large Language Model (LLM)</strong> is a type of AI specifically designed to understand and generate human language. The word "large" refers to both the size of the training data (billions of documents) and the number of mathematical parameters (billions to trillions of settings the model learned).</p>
+    <p>Popular LLMs include: <span class="tag t-teal">GPT-4o</span> <span class="tag t-amber">Gemini</span> <span class="tag t-navy">Claude</span> <span class="tag t-purple">Llama</span> <span class="tag t-coral">Mistral</span></p>
+  </div>
+
+  <div class="card c-teal">
+    <h3>How Did the LLM Learn? (Training)</h3>
+    <ul class="steps">
+      <li><span class="step-num">1</span><div><strong>Pre-training:</strong> The model reads a massive amount of text from the internet, books, and other sources. It learns language patterns by trying to predict missing or next words — over and over, billions of times.</div></li>
+      <li><span class="step-num">2</span><div><strong>Fine-tuning:</strong> After basic training, humans provide examples of good and bad responses. The model is adjusted to give more helpful, accurate, and safe answers.</div></li>
+      <li><span class="step-num">3</span><div><strong>RLHF (Reinforcement Learning from Human Feedback):</strong> Human raters score responses, and the model learns to favor the kinds of answers humans rated highest. This is how models learn to be more "helpful" and "harmless."</div></li>
+    </ul>
+  </div>
+
+  <div class="g2">
+    <div class="card c-amber">
+      <h3>⚡ Fast Models (Standard)</h3>
+      <p>These models respond quickly by generating answers in a more direct, linear fashion.</p>
+      <ul>
+        <li><strong>How:</strong> Predicts text token by token without stopping to "think deeply"</li>
+        <li><strong>Best for:</strong> Drafting text, answering quick questions, summarizing, brainstorming</li>
+        <li><strong>Examples:</strong> GPT-4o mini, Gemini Flash, Claude Haiku</li>
+        <li><strong>Trade-off:</strong> Faster but may miss nuance on complex problems</li>
+      </ul>
+    </div>
+    <div class="card c-purple">
+      <h3>🧠 Thinking/Reasoning Models</h3>
+      <p>Newer models that pause and reason step-by-step before responding — like "showing their work."</p>
+      <ul>
+        <li><strong>How:</strong> Uses a hidden "chain of thought" — the model works through logic before answering</li>
+        <li><strong>Best for:</strong> Multi-step math, complex analysis, nuanced decisions</li>
+        <li><strong>Examples:</strong> OpenAI o1/o3, Claude Thinking Mode, Gemini 2.0 Flash Thinking</li>
+        <li><strong>Trade-off:</strong> Slower and more expensive, but more accurate on complex tasks</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="highlight">
+    <strong>🏫 What This Means for Educators:</strong>
+    <ul style="margin-top:.5rem;">
+      <li>For <strong>lesson planning, email drafts, quiz generation</strong> → a fast model is usually enough</li>
+      <li>For <strong>complex data analysis, detailed rubric creation, or nuanced policy review</strong> → a thinking model may give better results</li>
+      <li>Either way: <strong>always check the output before using it</strong></li>
+    </ul>
+  </div>
+
+  <div class="card c-navy">
+    <h3>Context Window — What the AI Can "Remember"</h3>
+    <p>LLMs can only process a limited amount of text at once — called the <strong>context window</strong>. Think of it like short-term memory. Once your conversation exceeds the context window, earlier messages may be "forgotten."</p>
+    <p>This means: if you're in a long conversation and the AI seems to forget what you said earlier — it probably did. Start a fresh conversation for a new task.</p>
+  </div>
+
+  <div class="card c-teal">
+    <h3>Does the AI Know Everything Up to Today?</h3>
+    <p>No. LLMs have a <strong>training cutoff date</strong> — the point at which their training data stops. Anything that happened after that date is generally unknown to the model <em>unless</em> it has a live web-search feature.</p>
+    <p>Example: An AI trained through early 2024 may not know about laws passed in late 2024 or 2025. <strong>Always verify time-sensitive information from independent sources.</strong></p>
+  </div>
+
+  <div class="alert">
+    <span class="alert-icon">⚠️</span>
+    Whether you use a fast model or a thinking model — the output must still be verified. Reasoning models are more accurate on complex problems but still make mistakes. Always check.
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════════════════════ -->
+<!-- TAB 4: AI LITERACY -->
+<!-- ═══════════════════════════════════════════════════════════ -->
+<div class="section" id="t4">
+  <h2 class="sec-title">AI Literacy</h2>
+  <p class="sec-lead">Why does it matter — and what does it actually include?</p>
+
+  <div class="card c-amber">
+    <h3>Why AI Literacy Matters for Educators</h3>
+    <p>AI is already in your students' lives — and your workplace. Whether or not schools formally adopt AI tools, students are using them on their own. Educators who understand AI can:</p>
+    <div class="g2">
+      <ul>
+        <li>Guide students to use AI responsibly</li>
+        <li>Design assignments that can't be easily shortcut</li>
+        <li>Identify when AI-generated work is submitted</li>
+        <li>Model critical thinking about AI output</li>
+      </ul>
+      <ul>
+        <li>Evaluate AI tools before adopting them</li>
+        <li>Protect student privacy and data</li>
+        <li>Participate in school policy conversations</li>
+        <li>Prepare students for an AI-integrated world</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="card c-navy">
+    <h3>The Aspects of AI Literacy</h3>
+    <p>AI literacy isn't just about knowing how to use ChatGPT. It encompasses several dimensions:</p>
+  </div>
+
+  <div class="g2">
+    <div class="card c-teal">
+      <span class="ic-icon" style="font-size:1.8rem; display:block; margin-bottom:.4rem;">🧩</span>
+      <h3>1. Conceptual Understanding</h3>
+      <p>Knowing <em>what</em> AI is and isn't — the difference between traditional AI and generative AI, how models are trained, what LLMs actually do.</p>
+      <p><span class="tag t-teal">Foundational</span></p>
+    </div>
+    <div class="card c-amber">
+      <span class="ic-icon" style="font-size:1.8rem; display:block; margin-bottom:.4rem;">🛠️</span>
+      <h3>2. Practical Skills</h3>
+      <p>Being able to use AI tools effectively — writing good prompts, iterating on responses, knowing which tools work best for which tasks.</p>
+      <p><span class="tag t-amber">Hands-On</span></p>
+    </div>
+    <div class="card c-coral">
+      <span class="ic-icon" style="font-size:1.8rem; display:block; margin-bottom:.4rem;">🔍</span>
+      <h3>3. Critical Evaluation</h3>
+      <p>The ability to assess AI output for accuracy, bias, completeness, and appropriateness. This is arguably the most important skill for educators.</p>
+      <p><span class="tag t-coral">Essential</span></p>
+    </div>
+    <div class="card c-navy">
+      <span class="ic-icon" style="font-size:1.8rem; display:block; margin-bottom:.4rem;">🔐</span>
+      <h3>4. Data &amp; Privacy Awareness</h3>
+      <p>Understanding how AI systems use entered data, what PII is, why it must be protected, and how to choose tools that are student-safe.</p>
+      <p><span class="tag t-navy">Non-Negotiable</span></p>
+    </div>
+    <div class="card c-purple">
+      <span class="ic-icon" style="font-size:1.8rem; display:block; margin-bottom:.4rem;">⚖️</span>
+      <h3>5. Ethical Reasoning</h3>
+      <p>Recognizing the ethical dimensions of AI — bias, equity, academic integrity, environmental impact, and the rights of individuals.</p>
+      <p><span class="tag t-purple">Ongoing</span></p>
+    </div>
+    <div class="card c-green">
+      <span class="ic-icon" style="font-size:1.8rem; display:block; margin-bottom:.4rem;">🌐</span>
+      <h3>6. Digital Citizenship</h3>
+      <p>Understanding how AI intersects with responsible online behavior — misinformation, deepfakes, copyright, and responsible creation.</p>
+      <p><span class="tag t-green">Citizenship</span></p>
+    </div>
+  </div>
+
+  <div class="highlight">
+    <strong>🏫 Ohio Context:</strong> Ohio's SB 29 (signed 2024) directs ODEW to develop model AI policies for school districts. Districts across Ohio are expected to establish AI use policies. AI literacy is now an <strong>organizational imperative</strong> — not just a personal interest.
+  </div>
+
+  <div class="card c-teal">
+    <h3>AI Literacy is NOT About Being a Tech Expert</h3>
+    <p>You do not need to be able to code, build models, or understand advanced mathematics. AI literacy for educators means:</p>
+    <ul>
+      <li>Understanding enough to <strong>make informed decisions</strong></li>
+      <li>Knowing enough to <strong>protect your students</strong></li>
+      <li>Being able to <strong>teach students to think critically</strong> about AI</li>
+      <li>Having the confidence to <strong>use tools intentionally</strong></li>
+    </ul>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════════════════════ -->
+<!-- TAB 5: HALLUCINATIONS -->
+<!-- ═══════════════════════════════════════════════════════════ -->
+<div class="section" id="t5">
+  <h2 class="sec-title">AI Hallucinations</h2>
+  <p class="sec-lead">One of the most important concepts every educator must understand about AI.</p>
+
+  <div class="card c-coral">
+    <h3>What Is an AI Hallucination?</h3>
+    <p>An AI hallucination is when a generative AI produces <strong>information that is completely made up — stated with total confidence</strong>. The AI presents false information as if it were factual.</p>
+    <p>This is not a glitch or a rare bug. It is a <strong>fundamental characteristic</strong> of how LLMs work. All current AI systems can and do hallucinate.</p>
+  </div>
+
+  <div class="card c-amber">
+    <h3>Why Does Hallucination Happen?</h3>
+    <p>Remember: AI is predicting statistically likely text — not looking up facts. When the model doesn't know something, it doesn't say "I don't know." It does what it always does: <strong>it predicts the most plausible-sounding continuation of the text</strong>. That continuation may be entirely fabricated.</p>
+    <div class="g2">
+      <div>
+        <h4>Common Triggers</h4>
+        <ul>
+          <li>Asking about obscure or very specific facts</li>
+          <li>Asking about recent events (after training cutoff)</li>
+          <li>Asking for citations, sources, or statistics</li>
+          <li>Asking for names of real but niche people</li>
+          <li>Asking for local or regional information</li>
+        </ul>
+      </div>
+      <div>
+        <h4>What Makes It Dangerous</h4>
+        <ul>
+          <li>The text sounds completely authoritative</li>
+          <li>The grammar and style are flawless</li>
+          <li>It often includes just enough truth to seem credible</li>
+          <li>The AI rarely signals its own uncertainty</li>
+          <li>Fake citations look real at a glance</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <div class="card c-navy">
+    <h3>Real-World Examples of Hallucinations</h3>
+    <table>
+      <thead><tr><th>What Was Asked</th><th>What the AI Made Up</th></tr></thead>
+      <tbody>
+        <tr><td>A lawyer asked for case citations to support an argument</td><td>The AI invented six fake case names — all of which sounded real. The lawyer submitted them in court.</td></tr>
+        <tr><td>"List the research studies on X"</td><td>AI generated realistic-sounding author names, journal names, and publication years — none of which existed</td></tr>
+        <tr><td>"Who is the principal of [specific school]?"</td><td>AI confidently named a person — who had never worked at that school</td></tr>
+        <tr><td>"What does Ohio law say about [specific policy]?"</td><td>AI invented specific statute numbers and language that doesn't exist in Ohio law</td></tr>
+        <tr><td>"Summarize this book"</td><td>AI inserted plot points, characters, and quotes that are not in the actual book</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="alert">
+    <span class="alert-icon">🚨</span>
+    NEVER share AI-generated statistics, citations, research studies, legal references, or specific factual claims with students or in professional documents without independently verifying each one from primary sources first.
+  </div>
+
+  <div class="g2">
+    <div class="card c-green">
+      <h3>✅ How to Protect Yourself</h3>
+      <ul>
+        <li>Always independently verify facts, statistics, and citations</li>
+        <li>Use AI for structure, ideas, and drafts — not as a factual authority</li>
+        <li>Ask AI to flag its own uncertainty ("Tell me where you're unsure")</li>
+        <li>Cross-reference with trusted sources (official websites, textbooks)</li>
+        <li>Be especially skeptical of specific numbers, dates, and names</li>
+        <li>Model this verification habit for your students every time</li>
+      </ul>
+    </div>
+    <div class="card c-teal">
+      <h3>🏫 Teaching Opportunity</h3>
+      <p>Hallucinations are actually a powerful teaching tool. Consider:</p>
+      <ul>
+        <li>Showing students an AI hallucination and asking them to find the error</li>
+        <li>Having students fact-check AI-generated content</li>
+        <li>Discussing <em>why</em> AI makes things up (connects to media literacy)</li>
+        <li>Using AI errors to reinforce the importance of primary sources</li>
+      </ul>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════════════════════ -->
+<!-- TAB 6: DATA & PRIVACY -->
+<!-- ═══════════════════════════════════════════════════════════ -->
+<div class="section" id="t6">
+  <h2 class="sec-title">Data, Privacy &amp; PII</h2>
+  <p class="sec-lead">Understanding how AI handles your data — and why protecting student information is non-negotiable.</p>
+
+  <div class="alert">
+    <span class="alert-icon">🔒</span>
+    NEVER ENTER STUDENT PII INTO ANY AI TOOL — unless your district has a signed Data Privacy Agreement (DPA) with that specific tool that explicitly covers student data.
+  </div>
+
+  <div class="card c-coral">
+    <h3>What Is PII?</h3>
+    <p><strong>Personally Identifiable Information (PII)</strong> is any data that can be used to identify a specific person. In a school context, this includes — but is not limited to:</p>
+    <div class="g2">
+      <ul>
+        <li>Student name</li>
+        <li>Date of birth</li>
+        <li>Student ID number</li>
+        <li>Address or contact information</li>
+        <li>Parent/guardian names</li>
+        <li>Social Security Number</li>
+      </ul>
+      <ul>
+        <li>Grades, GPA, or test scores</li>
+        <li>IEP or 504 information</li>
+        <li>Behavioral or disciplinary records</li>
+        <li>Photos of students</li>
+        <li>Attendance records</li>
+        <li>Health or medical information</li>
+      </ul>
+    </div>
+    <p><strong>When in doubt — leave it out.</strong> Use generic descriptions instead.</p>
+  </div>
+
+  <div class="card c-amber">
+    <h3>How Generative AI Uses What You Enter</h3>
+    <p>This varies significantly by platform and plan, but here's what you need to understand:</p>
+    <table>
+      <thead><tr><th>Scenario</th><th>What May Happen to Your Data</th></tr></thead>
+      <tbody>
+        <tr><td>Free consumer tools (e.g., free ChatGPT)</td><td>Your prompts and conversations may be stored, reviewed by staff, and used to improve future models</td></tr>
+        <tr><td>Paid/enterprise plans with data agreements</td><td>May have opt-outs from training use; data may still be stored temporarily for operational purposes</td></tr>
+        <tr><td>School-licensed tools with signed DPAs</td><td>Stronger protections; data typically not used for training; subject to FERPA/COPPA compliance</td></tr>
+        <tr><td>On-premises/local models</td><td>Highest privacy — data never leaves your network</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="g2">
+    <div class="card c-navy">
+      <h3>Laws That Protect Students</h3>
+      <ul>
+        <li><strong>FERPA</strong> — Federal law protecting student education records. Schools cannot share student data without consent.</li>
+        <li><strong>COPPA</strong> — Protects children under 13 from unauthorized data collection online.</li>
+        <li><strong>Ohio Student Privacy Laws</strong> — Ohio has additional protections for student data used by ed-tech vendors.</li>
+        <li><strong>Your district's AUP</strong> — Acceptable Use Policy governs what tools students (and staff) may use.</li>
+      </ul>
+    </div>
+    <div class="card c-teal">
+      <h3>What You Should Ask Before Using Any AI Tool</h3>
+      <ul>
+        <li>Does our district have a <strong>Data Privacy Agreement</strong> with this tool?</li>
+        <li>Is this tool on our district's <strong>approved list</strong>?</li>
+        <li>Does this tool use entered data for <strong>AI training</strong>?</li>
+        <li>Is student data encrypted and stored securely?</li>
+        <li>Is this tool compliant with <strong>COPPA</strong> if used by minors?</li>
+        <li>Can I use this tool with only generic, anonymized scenarios?</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="card c-green">
+    <h3>✅ Safe Practices for Educators</h3>
+    <div class="g2">
+      <div>
+        <h4>INSTEAD OF entering:</h4>
+        <ul>
+          <li>"My student John Smith is struggling with reading at a 2nd grade level and has an IEP for dyslexia"</li>
+        </ul>
+        <h4 style="margin-top:1rem;">TRY:</h4>
+        <ul>
+          <li>"Create a reading scaffold for a 4th grade student reading at a 2nd grade level who benefits from multi-sensory strategies"</li>
+        </ul>
+      </div>
+      <div>
+        <h4>INSTEAD OF entering:</h4>
+        <ul>
+          <li>"Write a parent email to Mrs. Johnson about her son Tyler's behavioral issues in 3rd period"</li>
+        </ul>
+        <h4 style="margin-top:1rem;">TRY:</h4>
+        <ul>
+          <li>"Draft a professional parent communication about a student's repeated disruptions in class and suggest a meeting"</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════════════════════ -->
+<!-- TAB 7: FOR SCHOOLS -->
+<!-- ═══════════════════════════════════════════════════════════ -->
+<div class="section" id="t7">
+  <h2 class="sec-title">AI for Schools</h2>
+  <p class="sec-lead">What's out there — and what are other schools actually buying?</p>
+
+  <div class="card c-navy">
+    <h3>Categories of AI Tools Available to Schools</h3>
+    <div class="g3">
+      <div>
+        <h4>📚 Instructional AI</h4>
+        <ul>
+          <li>Personalized tutoring</li>
+          <li>Adaptive learning platforms</li>
+          <li>Content differentiation</li>
+          <li>Reading level adjustment</li>
+        </ul>
+      </div>
+      <div>
+        <h4>🧑‍🏫 Teacher Productivity AI</h4>
+        <ul>
+          <li>Lesson planning tools</li>
+          <li>Rubric &amp; quiz generators</li>
+          <li>Feedback assistants</li>
+          <li>Parent communication</li>
+        </ul>
+      </div>
+      <div>
+        <h4>📊 Administrative AI</h4>
+        <ul>
+          <li>Data analysis tools</li>
+          <li>Attendance pattern detection</li>
+          <li>Student support identification</li>
+          <li>Scheduling optimization</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <h3 style="font-family:'Lora',serif; color:var(--navy); margin-bottom:1rem;">Popular Tools Schools Are Purchasing</h3>
+
+  <div class="g2">
+    <div class="card c-teal">
+      <h3>🧑‍🏫 MagicSchool AI</h3>
+      <span class="tag t-teal">Teacher Tool</span> <span class="tag t-amber">K–12</span>
+      <p style="margin-top:.6rem;">One of the most widely adopted educator-facing AI tools. Includes 60+ tools for lesson plans, rubrics, IEP goal writing (use generic language — no student names!), parent communications, quiz generation, and more. Built specifically for educators with FERPA considerations in mind.</p>
+    </div>
+    <div class="card c-amber">
+      <h3>🚀 Brisk Teaching</h3>
+      <span class="tag t-amber">Chrome Extension</span> <span class="tag t-teal">Teacher Tool</span>
+      <p style="margin-top:.6rem;">A Chrome extension that works inside Google Docs, Slides, and other platforms. Teachers can generate lesson activities, provide AI-assisted feedback on student work, create quizzes from any content, and more — without leaving their current workflow.</p>
+    </div>
+    <div class="card c-navy">
+      <h3>📘 Khanmigo (Khan Academy)</h3>
+      <span class="tag t-navy">Student-Facing</span> <span class="tag t-green">Tutoring</span>
+      <p style="margin-top:.6rem;">A Socratic AI tutor built into Khan Academy. Rather than giving answers, it asks guiding questions to help students work through problems. Available for students and teachers. Built on Google's Gemini model with strong student data protections.</p>
+    </div>
+    <div class="card c-teal">
+      <h3>🎨 Curipod</h3>
+      <span class="tag t-teal">Interactive Lessons</span> <span class="tag t-amber">K–12</span>
+      <p style="margin-top:.6rem;">Generates interactive slide-based lessons with polls, word clouds, drawings, and Q&amp;A. Teachers input a topic and grade level and get an engaging, interactive lesson ready in seconds. Strong engagement tool for whole-class instruction.</p>
+    </div>
+    <div class="card c-amber">
+      <h3>📋 Diffit</h3>
+      <span class="tag t-amber">Differentiation</span> <span class="tag t-teal">Reading</span>
+      <p style="margin-top:.6rem;">Takes any text, topic, or video and generates reading passages at multiple Lexile levels, plus comprehension questions, vocabulary activities, and graphic organizers. Excellent for differentiation and supporting multilingual learners.</p>
+    </div>
+    <div class="card c-navy">
+      <h3>🏫 SchoolAI</h3>
+      <span class="tag t-navy">Student-Facing</span> <span class="tag t-green">FERPA-Compliant</span>
+      <p style="margin-top:.6rem;">A student-safe AI chat platform designed for classroom use. Teachers can create "Spaces" — custom AI tutors with specific parameters (topics, personas, instructions). Teachers see student conversations in a dashboard for safety monitoring.</p>
+    </div>
+    <div class="card c-teal">
+      <h3>🧑‍💻 Eduaide.Ai</h3>
+      <span class="tag t-teal">Teacher Tool</span> <span class="tag t-amber">Content Creation</span>
+      <p style="margin-top:.6rem;">A comprehensive teacher assistant with 100+ resource types: lesson plans, assessments, project-based learning frameworks, substitution plans, professional learning activities, and more. Strong customization options for grade level and subject.</p>
+    </div>
+    <div class="card c-amber">
+      <h3>🔤 Twee</h3>
+      <span class="tag t-amber">ELA / ESL</span> <span class="tag t-teal">Language Arts</span>
+      <p style="margin-top:.6rem;">Designed for English teachers and ESL/EFL contexts. Generates questions, games, worksheets, and activities from YouTube videos, texts, or custom topics. Great for reading comprehension, vocabulary, and discussion prompt generation.</p>
+    </div>
+    <div class="card c-navy">
+      <h3>🎓 Microsoft Copilot for Education</h3>
+      <span class="tag t-navy">Enterprise</span> <span class="tag t-teal">M365</span>
+      <p style="margin-top:.6rem;">Integrated into Microsoft 365 tools (Word, Teams, PowerPoint). For districts already in the Microsoft ecosystem, Copilot adds AI assistance directly into existing workflows. Includes student data privacy features via the Education tenant.</p>
+    </div>
+    <div class="card c-teal">
+      <h3>📚 Google Gemini for Education</h3>
+      <span class="tag t-teal">Enterprise</span> <span class="tag t-green">Google Workspace</span>
+      <p style="margin-top:.6rem;">For Google Workspace for Education districts, Gemini adds AI features to Docs, Slides, and Gmail. Includes Notebook LM for research and deep learning tasks. Student data protections depend on district configuration and edition.</p>
+    </div>
+    <div class="card c-amber">
+      <h3>📖 Book Creator (AI Features)</h3>
+      <span class="tag t-amber">Creative</span> <span class="tag t-teal">K–12</span>
+      <p style="margin-top:.6rem;">A popular student book creation tool that has added AI image generation and writing assistance features. Used widely in elementary and middle school for creative projects and digital literacy. Students create — AI assists.</p>
+    </div>
+    <div class="card c-navy">
+      <h3>✍️ Grammarly for Education</h3>
+      <span class="tag t-navy">Writing</span> <span class="tag t-green">Well-Established</span>
+      <p style="margin-top:.6rem;">AI-powered writing assistant that provides grammar, clarity, tone, and style feedback. Now includes generative AI features. One of the oldest AI tools in education. Districts have DPA options. Helpful for writing instruction when used with clear academic integrity guidelines.</p>
+    </div>
+  </div>
+
+  <div class="highlight">
+    <strong>💡 Before Your District Adopts Any Tool — Check:</strong>
+    <ul style="margin-top:.5rem;">
+      <li>Is there a signed <strong>Data Privacy Agreement (DPA)</strong>?</li>
+      <li>Is it on the <strong>Student Data Privacy Consortium (SDPC)</strong> approved list?</li>
+      <li>Does the vendor have a <strong>COPPA-compliant version</strong>?</li>
+      <li>Is student data used for <strong>AI model training</strong>?</li>
+      <li>Does the tool have <strong>teacher oversight features</strong>?</li>
+    </ul>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════════════════════ -->
+<!-- TAB 8: PROS & CONS -->
+<!-- ═══════════════════════════════════════════════════════════ -->
+<div class="section" id="t8">
+  <h2 class="sec-title">Pros &amp; Cons of AI in Instruction</h2>
+  <p class="sec-lead">AI brings genuine benefits and genuine risks. An informed educator sees both clearly.</p>
+
+  <div class="g2">
+    <div class="card c-green pros-card">
+      <h3>✅ Benefits for Teachers</h3>
+      <ul>
+        <li><strong>Time savings:</strong> Drafting communications, lesson outlines, rubrics, and assessments in minutes instead of hours</li>
+        <li><strong>Differentiation:</strong> Quickly create materials at multiple reading/complexity levels</li>
+        <li><strong>Idea generation:</strong> Brainstorm activity ideas, project-based learning hooks, discussion questions</li>
+        <li><strong>Administrative support:</strong> Summarize documents, draft emails, create professional learning agendas</li>
+        <li><strong>Professional growth:</strong> Explain content in new ways, explore pedagogical approaches</li>
+      </ul>
+    </div>
+    <div class="card c-coral cons-card">
+      <h3>⚠️ Risks for Teachers</h3>
+      <ul>
+        <li><strong>Accuracy:</strong> AI can produce plausible-sounding but incorrect information — especially facts, laws, citations</li>
+        <li><strong>Bias:</strong> Training data reflects human biases that can appear in AI output</li>
+        <li><strong>Deskilling:</strong> Over-reliance on AI may erode professional skills over time</li>
+        <li><strong>Data privacy:</strong> Risk of entering PII into tools without proper protections</li>
+        <li><strong>Over-trust:</strong> Using AI output without verification can embarrass or harm</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="g2">
+    <div class="card c-green pros-card">
+      <h3>✅ Benefits for Students</h3>
+      <ul>
+        <li><strong>Personalized support:</strong> AI tutors available 24/7 at the student's own pace</li>
+        <li><strong>Scaffolding:</strong> Real-time feedback on writing, reading, and problem-solving</li>
+        <li><strong>Accessibility:</strong> Text-to-speech, translation, content simplification for diverse learners</li>
+        <li><strong>Engagement:</strong> Novel, interactive formats can increase motivation</li>
+        <li><strong>Future readiness:</strong> Learning to use and critically evaluate AI is a workforce skill</li>
+      </ul>
+    </div>
+    <div class="card c-coral cons-card">
+      <h3>⚠️ Risks for Students</h3>
+      <ul>
+        <li><strong>Academic dishonesty:</strong> AI makes it easy to submit work that isn't one's own</li>
+        <li><strong>Learned helplessness:</strong> Students may skip the productive struggle needed for learning</li>
+        <li><strong>Misinformation:</strong> Students may accept AI output as fact without questioning</li>
+        <li><strong>Privacy:</strong> Students may not understand the risks of sharing personal information</li>
+        <li><strong>Inequity:</strong> Access to AI tools varies by school and socioeconomic context</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="card c-navy">
+    <h3>The Educator's Role in the Balance</h3>
+    <p>The goal is not to ban AI or to adopt it uncritically — it's to be <strong>intentional</strong>. Research consistently shows that the best outcomes happen when educators:</p>
+    <ul>
+      <li>Define <em>when</em> AI is and isn't appropriate in the learning process</li>
+      <li>Teach students <em>how</em> to use AI as a thinking partner — not a replacement for thinking</li>
+      <li>Design assessments where the learning process matters, not just the product</li>
+      <li>Model verification habits so students internalize them</li>
+    </ul>
+  </div>
+
+  <div class="card c-teal">
+    <h3>What the Research Suggests (So Far)</h3>
+    <ul>
+      <li>AI tutoring tools show <strong>promising results</strong> for students who engage with them actively (vs. passively accepting answers)</li>
+      <li>Teacher productivity benefits are real — but require <strong>verification practices</strong> to avoid errors</li>
+      <li>The <strong>digital divide</strong> in AI access is real and growing — equity must be part of the conversation</li>
+      <li>AI performs <strong>better on average</strong> but can produce significant errors on specific questions — making professional oversight essential</li>
+      <li>Early research is still emerging — the field is moving faster than the research base</li>
+    </ul>
+  </div>
+
+  <div class="alert">
+    <span class="alert-icon">⚠️</span>
+    The single most important mitigation for almost every "Con" listed above? <br><strong>Educator judgment + verification of AI output — every single time.</strong>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════════════════════ -->
+<!-- TAB 9: ETHICS -->
+<!-- ═══════════════════════════════════════════════════════════ -->
+<div class="section" id="t9">
+  <h2 class="sec-title">Ethical Implications of AI</h2>
+  <p class="sec-lead">AI raises profound questions about fairness, accountability, and what it means to be human. Educators are on the front lines of these conversations.</p>
+
+  <div class="g2">
+    <div class="card c-coral">
+      <span class="ic-icon" style="font-size:1.8rem; display:block;">⚖️</span>
+      <h3>Bias &amp; Fairness</h3>
+      <p>AI systems learn from human-generated data — and human data is full of historical biases related to race, gender, socioeconomic status, language, and more.</p>
+      <ul>
+        <li>AI can produce content that stereotypes or marginalizes groups</li>
+        <li>Facial recognition and prediction tools have well-documented racial bias</li>
+        <li>Language models may produce more helpful responses for standard American English than for other dialects</li>
+        <li><strong>Educator action:</strong> Critically evaluate AI output for bias; represent diverse perspectives explicitly in prompts</li>
+      </ul>
+    </div>
+    <div class="card c-amber">
+      <span class="ic-icon" style="font-size:1.8rem; display:block;">🎓</span>
+      <h3>Academic Integrity</h3>
+      <p>AI has fundamentally changed what "academic dishonesty" means and how we detect it.</p>
+      <ul>
+        <li>AI can complete essays, solve problems, and write code — often undetectably</li>
+        <li>AI detection tools are unreliable and have high false-positive rates (can accuse honest students)</li>
+        <li>The solution is primarily <strong>pedagogy</strong>, not detection</li>
+        <li><strong>Educator action:</strong> Redesign assessments for process, voice, and in-class demonstration; create explicit, thoughtful AI use policies</li>
+      </ul>
+    </div>
+    <div class="card c-navy">
+      <span class="ic-icon" style="font-size:1.8rem; display:block;">🔐</span>
+      <h3>Privacy &amp; Surveillance</h3>
+      <p>AI creates new risks around data collection, behavioral monitoring, and student tracking.</p>
+      <ul>
+        <li>Some AI tools build profiles of student behavior and performance over time</li>
+        <li>Proctoring AI tools have been criticized for privacy invasion and racial bias</li>
+        <li>Data collected today may be used or shared in ways not anticipated</li>
+        <li><strong>Educator action:</strong> Advocate for strong DPAs; question surveillance-based tools; involve families in AI tool conversations</li>
+      </ul>
+    </div>
+    <div class="card c-teal">
+      <span class="ic-icon" style="font-size:1.8rem; display:block;">🌍</span>
+      <h3>Equity &amp; Access</h3>
+      <p>Not all students have equal access to AI tools — and AI benefits disproportionately accrue to those already privileged.</p>
+      <ul>
+        <li>Device and broadband access gaps remain significant in Ohio and nationally</li>
+        <li>Students with better prompting skills get better results — a new digital literacy gap</li>
+        <li>Schools that can afford better tools give students better AI experiences</li>
+        <li><strong>Educator action:</strong> Advocate for equitable AI access; explicitly teach AI prompting and evaluation skills</li>
+      </ul>
+    </div>
+    <div class="card c-purple">
+      <span class="ic-icon" style="font-size:1.8rem; display:block;">🌱</span>
+      <h3>Environmental Impact</h3>
+      <p>Training and running large AI models consumes significant energy and water resources.</p>
+      <ul>
+        <li>Training a single large AI model can emit as much CO₂ as five cars over their lifetimes</li>
+        <li>AI data centers consume enormous amounts of water for cooling</li>
+        <li>The environmental cost of AI is largely invisible to end users</li>
+        <li><strong>Educator action:</strong> Include AI's environmental footprint in digital citizenship and environmental curriculum</li>
+      </ul>
+    </div>
+    <div class="card c-amber">
+      <span class="ic-icon" style="font-size:1.8rem; display:block;">👤</span>
+      <h3>Accountability &amp; Transparency</h3>
+      <p>When AI makes a consequential decision — who is responsible?</p>
+      <ul>
+        <li>AI used in discipline, grading, or placement creates accountability gaps</li>
+        <li>Most AI systems are "black boxes" — even their creators can't fully explain every decision</li>
+        <li>Errors in AI-assisted decisions can harm individual students</li>
+        <li><strong>Educator action:</strong> Keep humans in the decision loop for any consequential decisions; document AI involvement</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="highlight">
+    <strong>🏫 Turning Ethics into Classroom Learning:</strong><br>
+    These ethical dilemmas are outstanding discussion, debate, and research topics for middle and high school students. AI ethics connects to ELA, social studies, science, philosophy, and civic education. Students who grapple with these questions now are better prepared to navigate the AI-saturated world they're entering.
+  </div>
+
+  <div class="card c-navy">
+    <h3>A Framework for Ethical AI Use in Schools</h3>
+    <ul>
+      <li><strong>Transparency:</strong> Be open with students and families about when and how AI is being used</li>
+      <li><strong>Human oversight:</strong> Keep humans in the loop for decisions that affect students</li>
+      <li><strong>Equity first:</strong> Ensure AI use doesn't advantage already-advantaged students</li>
+      <li><strong>Privacy by default:</strong> Protect student data as the baseline, not an afterthought</li>
+      <li><strong>Critical thinking:</strong> Teach students to question AI — including in school</li>
+    </ul>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════════════════════ -->
+<!-- TAB 10: CLASSROOM IDEAS -->
+<!-- ═══════════════════════════════════════════════════════════ -->
+<div class="section" id="t10">
+  <h2 class="sec-title">AI in the Classroom — Real Examples</h2>
+  <p class="sec-lead">Practical, grade-level ideas for using AI as a teaching tool — not a replacement for learning.</p>
+
+  <div class="alert">
+    <span class="alert-icon">🚨</span>
+    FOR EVERY EXAMPLE BELOW: The teacher MUST verify all AI-generated content for accuracy before using it with students. Use generic scenarios — never enter student names, IDs, or identifying information.
+  </div>
+
+  <!-- ELEMENTARY -->
+  <h3 style="font-family:'Lora',serif; color:var(--teal); font-size:1.3rem; margin:1.5rem 0 .8rem; border-bottom:2px solid var(--teal); padding-bottom:.4rem;">🌟 Elementary School</h3>
+
+  <div class="cc">
+    <div class="cc-head cc-elem">
+      <div class="cc-label">Elementary · Reading / ELA</div>
+      <h3>📚 Using AI to Support Reading Instruction</h3>
+    </div>
+    <div class="cc-body">
+      <div class="g2">
+        <div>
+          <h4>Teacher Uses (Prep):</h4>
+          <ul>
+            <li>Ask AI to rewrite a classroom reading passage at 2–3 different Lexile levels for differentiation — then <strong>verify every sentence for accuracy and age-appropriateness</strong></li>
+            <li>Generate a set of Bloom's Taxonomy comprehension questions for a story unit (literal, inferential, evaluative)</li>
+            <li>Create vocabulary activities (context clues sentences, word maps, matching games) for a target word list</li>
+            <li>Draft read-aloud discussion prompts for picture books</li>
+          </ul>
+        </div>
+        <div>
+          <h4>Student Learning Activities:</h4>
+          <ul>
+            <li>Teacher displays an AI-generated short story and class fact-checks it together — modeling critical thinking</li>
+            <li>Students ask an AI tutor to explain a word they don't know, then check the definition in a dictionary (source comparison)</li>
+            <li>Students dictate a story idea; AI expands it; class discusses what the AI added that wasn't in their idea</li>
+          </ul>
+          <div class="alert" style="font-size:.85rem; padding:.7rem; margin-top:.8rem;">⚠️ Always check every AI-generated passage before sharing with students</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="cc">
+    <div class="cc-head cc-elem">
+      <div class="cc-label">Elementary · Science</div>
+      <h3>🔬 Using AI to Spark Scientific Inquiry</h3>
+    </div>
+    <div class="cc-body">
+      <div class="g2">
+        <div>
+          <h4>Teacher Uses (Prep):</h4>
+          <ul>
+            <li>Generate grade-appropriate "What if?" inquiry questions for a science unit (e.g., "What would happen to plants if the sun disappeared for a week?") — verify scientific accuracy</li>
+            <li>Create a simple experiment procedure scaffold with labeled steps and materials list</li>
+            <li>Ask AI to explain a science concept (photosynthesis, water cycle) in "2nd grade language" — verify before using</li>
+            <li>Generate analogy-based explanations for abstract concepts</li>
+          </ul>
+        </div>
+        <div>
+          <h4>Student Learning Activities:</h4>
+          <ul>
+            <li>Students make a prediction; AI gives a different prediction; class discusses whose they think is correct and why — then they test it</li>
+            <li>After an experiment, students describe what they observed; teacher uses AI to help format a class lab report</li>
+            <li>"AI vs. Textbook" — compare AI's explanation of a concept to the textbook's; find differences</li>
+          </ul>
+          <div class="alert" style="font-size:.85rem; padding:.7rem; margin-top:.8rem;">⚠️ AI science content MUST be verified — science facts are a common area for hallucinations</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- MIDDLE SCHOOL -->
+  <h3 style="font-family:'Lora',serif; color:var(--navy); font-size:1.3rem; margin:1.5rem 0 .8rem; border-bottom:2px solid var(--navy); padding-bottom:.4rem;">🏫 Middle School</h3>
+
+  <div class="cc">
+    <div class="cc-head cc-middle">
+      <div class="cc-label">Middle School · Mathematics</div>
+      <h3>📐 AI as a Math Learning Partner</h3>
+    </div>
+    <div class="cc-body">
+      <div class="g2">
+        <div>
+          <h4>Teacher Uses (Prep):</h4>
+          <ul>
+            <li>Generate sets of practice problems at tiered difficulty levels for a concept — <strong>manually verify every calculation before distributing</strong></li>
+            <li>Ask AI to create real-world word problems set in contexts relevant to students (sports, social media, gaming, food)</li>
+            <li>Generate "worked example" walkthroughs of multi-step problems for note-taking scaffolds</li>
+            <li>Create error analysis problems — AI writes an incorrect solution for students to find the mistake</li>
+          </ul>
+        </div>
+        <div>
+          <h4>Student Learning Activities:</h4>
+          <ul>
+            <li>Students use a Socratic AI tutor (like Khanmigo) to work through a problem — AI asks guiding questions rather than giving the answer</li>
+            <li>"Catch the AI mistake" — teacher deliberately asks AI for a solution with an error; students identify it</li>
+            <li>Students write a word problem; AI solves it; students verify whether AI's solution is correct</li>
+            <li>Use AI to explore "What if the number changed?" extensions for enrichment</li>
+          </ul>
+          <div class="alert" style="font-size:.85rem; padding:.7rem; margin-top:.8rem;">⚠️ AI makes math errors. Verify every problem and solution before distributing to students.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="cc">
+    <div class="cc-head cc-middle">
+      <div class="cc-label">Middle School · Social Studies</div>
+      <h3>🌎 AI for Historical Thinking &amp; Inquiry</h3>
+    </div>
+    <div class="cc-body">
+      <div class="g2">
+        <div>
+          <h4>Teacher Uses (Prep):</h4>
+          <ul>
+            <li>Generate primary source "starter" questions to scaffold document analysis</li>
+            <li>Ask AI to summarize a historical event in plain language — then fact-check it against the textbook</li>
+            <li>Create debate argument outlines for both sides of a historical controversy (teacher verifies for balance and accuracy)</li>
+            <li>Generate discussion prompts connecting historical events to current issues</li>
+          </ul>
+        </div>
+        <div>
+          <h4>Student Learning Activities:</h4>
+          <ul>
+            <li>"Perspective Shift" — ask AI to describe an event from the viewpoint of different historical actors; discuss bias and whose perspective is centered</li>
+            <li>Students research a topic; they compare what they found to what AI says; identify discrepancies</li>
+            <li>AI generates a fictional "news article" about a historical event; students identify what's fact, opinion, or error</li>
+            <li>Debate prep: AI generates counterarguments; students respond with evidence</li>
+          </ul>
+          <div class="alert" style="font-size:.85rem; padding:.7rem; margin-top:.8rem;">⚠️ AI has historical biases and gaps. Always cross-reference with vetted historical sources.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- HIGH SCHOOL -->
+  <h3 style="font-family:'Lora',serif; color:#5a2d82; font-size:1.3rem; margin:1.5rem 0 .8rem; border-bottom:2px solid #5a2d82; padding-bottom:.4rem;">🎓 High School</h3>
+
+  <div class="cc">
+    <div class="cc-head cc-high">
+      <div class="cc-label">High School · English / Writing</div>
+      <h3>✍️ AI as a Writing Process Tool</h3>
+    </div>
+    <div class="cc-body">
+      <div class="g2">
+        <div>
+          <h4>Teacher Uses (Prep):</h4>
+          <ul>
+            <li>Generate writing mentor texts in a target genre — then verify and annotate to highlight craft moves</li>
+            <li>Create detailed rubrics with anchor descriptors for a writing type</li>
+            <li>Draft feedback sentence starters for conferences ("I noticed…", "A place to grow…")</li>
+            <li>Generate a range of thesis statement examples from weak to strong for instruction on argumentation</li>
+          </ul>
+        </div>
+        <div>
+          <h4>Student Learning Activities:</h4>
+          <ul>
+            <li>Students write a thesis; AI generates 3 potential counterarguments; students choose one to address in the essay</li>
+            <li>Students submit a draft paragraph; AI gives structural feedback (not just grammar); students revise based on feedback — they own the revision</li>
+            <li>Students read AI-generated essay on the same prompt; compare and contrast with their own argument</li>
+            <li>Use AI to generate a "weak" essay; class analyzes what makes it weak and rewrites sections</li>
+          </ul>
+          <div class="alert" style="font-size:.85rem; padding:.7rem; margin-top:.8rem;">⚠️ AI-generated writing is a teaching tool — not the student's product. Establish and communicate clear AI use guidelines for each assignment.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="cc">
+    <div class="cc-head cc-high">
+      <div class="cc-label">High School · Government / Civics</div>
+      <h3>🏛️ AI for Civic Understanding &amp; Critical Analysis</h3>
+    </div>
+    <div class="cc-body">
+      <div class="g2">
+        <div>
+          <h4>Teacher Uses (Prep):</h4>
+          <ul>
+            <li>Ask AI to summarize a piece of legislation in plain language — <strong>verify against the actual bill text at congress.gov or legislature.ohio.gov</strong></li>
+            <li>Generate structured discussion questions that reflect multiple political viewpoints on a policy issue</li>
+            <li>Create Socratic seminar prompts around constitutional questions</li>
+            <li>Draft compare/contrast frameworks for different forms of government</li>
+          </ul>
+        </div>
+        <div>
+          <h4>Student Learning Activities:</h4>
+          <ul>
+            <li>"AI vs. Primary Source" — students compare AI's summary of a law to the actual text; identify what AI got right, wrong, or omitted</li>
+            <li>AI generates arguments for multiple positions on a policy issue; students evaluate for balance and bias</li>
+            <li>Students ask AI questions about a civics topic; fact-check answers using .gov sources</li>
+            <li>AI generates a "political speech" for a position; students analyze for rhetorical devices and factual accuracy</li>
+          </ul>
+          <div class="alert" style="font-size:.85rem; padding:.7rem; margin-top:.8rem;">⚠️ AI's descriptions of current laws and political events are frequently outdated or inaccurate. Always verify with primary government sources.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ELECTIVES -->
+  <h3 style="font-family:'Lora',serif; color:#c0550a; font-size:1.3rem; margin:1.5rem 0 .8rem; border-bottom:2px solid #c0550a; padding-bottom:.4rem;">🎨 Elective Courses</h3>
+
+  <div class="cc">
+    <div class="cc-head cc-elective">
+      <div class="cc-label">Elective · Visual Art</div>
+      <h3>🖌️ AI as a Creative Collaborator in Art Class</h3>
+    </div>
+    <div class="cc-body">
+      <div class="g2">
+        <div>
+          <h4>Teacher Uses (Prep):</h4>
+          <ul>
+            <li>Generate art criticism discussion questions using the Feldman model (Describe, Analyze, Interpret, Judge)</li>
+            <li>Ask AI to describe the historical context of an art movement — verify with art history resources</li>
+            <li>Generate creative prompts that push beyond students' comfort zones</li>
+            <li>Draft artist statement sentence starters for student reflection</li>
+          </ul>
+        </div>
+        <div>
+          <h4>Student Learning Activities:</h4>
+          <ul>
+            <li>Students use AI image generators (in tool-approved settings) to explore composition ideas — then create the actual work by hand or digitally</li>
+            <li>Students describe their artwork to AI; AI writes a critical analysis; students compare AI's interpretation to their intent</li>
+            <li>Research an artist using AI; compare to museum or gallery database entries; evaluate AI accuracy</li>
+            <li>Discuss AI-generated art ethically: Who is the artist? What is authorship? What is creativity?</li>
+          </ul>
+          <div class="alert" style="font-size:.85rem; padding:.7rem; margin-top:.8rem;">⚠️ AI-generated images raise copyright and authorship issues. Establish classroom guidelines before using AI image tools.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="cc">
+    <div class="cc-head cc-elective">
+      <div class="cc-label">Elective · Physical Education</div>
+      <h3>🏃 AI for Fitness, Health Knowledge &amp; Strategy</h3>
+    </div>
+    <div class="cc-body">
+      <div class="g2">
+        <div>
+          <h4>Teacher Uses (Prep):</h4>
+          <ul>
+            <li>Ask AI to generate a 4-week fitness unit plan with warm-ups, activities, and cool-downs — then review and adapt for your equipment and student needs (<strong>verify all fitness/health claims</strong>)</li>
+            <li>Generate sport-specific rules explanations in student-friendly language</li>
+            <li>Create nutrition knowledge quizzes or scenario-based discussions</li>
+            <li>Draft goal-setting reflection prompts for fitness journals</li>
+          </ul>
+        </div>
+        <div>
+          <h4>Student Learning Activities:</h4>
+          <ul>
+            <li>Students ask AI to create a personal fitness goal plan — then evaluate it with the teacher for safety and realism (introduces critical health literacy)</li>
+            <li>Students ask AI about the rules of an unfamiliar sport or game; then verify using an official rulebook or sports organization website</li>
+            <li>"AI Health Coach" activity: students prompt AI for nutrition or training advice; evaluate whether the advice is evidence-based</li>
+            <li>Discuss: Should athletes use AI coaching tools? Explore technology's role in modern sports</li>
+          </ul>
+          <div class="alert" style="font-size:.85rem; padding:.7rem; margin-top:.8rem;">⚠️ AI health and fitness advice must be vetted by the PE teacher before students act on it. Some AI fitness advice can be unsafe or inappropriate for adolescents.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="card c-navy" style="margin-top:1.5rem;">
+    <h3>📌 Universal Principles for All Classroom AI Use</h3>
+    <div class="g2">
+      <ul>
+        <li>AI is a <strong>thinking partner</strong>, not a thinking replacement</li>
+        <li>The learning objective should drive AI use — not the other way around</li>
+        <li>Always make AI use <strong>visible and discussable</strong> with students</li>
+        <li>Model your own verification process out loud</li>
+      </ul>
+      <ul>
+        <li>Build in a <strong>"check the AI" step</strong> as a regular part of activities</li>
+        <li>Revisit and update your <strong>AI use guidelines</strong> each semester</li>
+        <li>Celebrate student thinking — not polished AI-generated products</li>
+        <li>Use AI errors as <strong>teachable moments</strong>, not embarrassments</li>
+      </ul>
+    </div>
+  </div>
+</div>
+
+</main>
+
+<script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
+function showTab(id, btn) {
+  document.querySelectorAll('.section').forEach(s => s.classList.remove('active'
